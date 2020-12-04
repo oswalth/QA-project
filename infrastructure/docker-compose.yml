@@ -70,10 +70,8 @@ services:
     build:
       context: ../
       dockerfile: ./code/Dockerfile
-    command: bash -c "
-      pytest -s -l -v --alluredir=./allure-results --selenoid=http://selenoid:4444/wd/hub code/tests
-      && docker cp test_container:/allure-results ./allure-results
-      "
+    command: "pytest -s -l -v --alluredir=./allure-results --selenoid=http://selenoid:4444/wd/hub code/tests"
     depends_on:
       myapp:
         condition: service_started
+#&& docker cp test_container:/allure-results ./allure-results

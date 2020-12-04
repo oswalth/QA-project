@@ -10,6 +10,8 @@ from tests.base import BaseUICase
 class TestUI(BaseUICase):
     def test1(self):
         with allure.step('Trying test1'):
+            with open('allure-results/test.txt', 'w') as f:
+                f.write('ok')
             time.sleep(2)
             allure.attach(name='Before', body=self.driver.get_screenshot_as_png(), attachment_type=AttachmentType.PNG)
             self.login_page.click(self.login_page.locators.LOGIN_BUTTON)
