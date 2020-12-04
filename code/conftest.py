@@ -31,12 +31,12 @@ def config(request):
     return {'browser': browser, 'version': version, 'url': url, 'download_dir': '/tmp', 'selenoid': selenoid}
 
 
-def pytest_configure(config):
-    while True:
-        try:
-            return requests.head(config.option.url)
-        except requests.exceptions.ConnectionError:
-            time.sleep(0.5)
+# def pytest_configure(config):
+#     while True:
+#         try:
+#             return requests.head(config.option.url)
+#         except requests.exceptions.ConnectionError:
+#             time.sleep(0.5)
 
 
 @pytest.fixture(scope="function")
