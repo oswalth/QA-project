@@ -64,10 +64,16 @@ services:
     networks:
       - project
     restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/oswalth/atom/QA-project/allure-results:/allure-results
     build:
       context: ../
       dockerfile: ./code/Dockerfile
-    command: "pytest -s -l -v --alluredir=./allure-results --selenoid=http://selenoid:4444/wd/hub code/tests"
+    command: bash -c "
+      pytest -s -l -v --alluredir=./allure-results --selenoid=http://selenoid:4444/wd/hub code/tests
+      && docker cp test_container:/allure-results ./allure-results
+      "
     depends_on:
       myapp:
         condition: service_started
