@@ -34,8 +34,7 @@ def config(request):
 def pytest_configure(config):
     while True:
         try:
-            print(dir(config))
-            return requests.head(config.getoption('--url'))
+            return requests.head(config.option.url)
         except requests.exceptions.ConnectionError:
             time.sleep(0.5)
 
