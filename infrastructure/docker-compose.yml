@@ -1,0 +1,61 @@
+version: '2.1'
+
+networks:
+  project:
+    external: true
+    name: project
+
+services:
+  db_container:
+    networks:
+      - project
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 2525
+    image: "percona:latest"
+    ports:
+    - "3306:3306"
+    volumes:
+    - /home/oswalth/atom/QA-project/infrastructure/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "-uroot", "-p2525", "ping", "-h", "127.0.0.1"]
+      timeout: 30s
+      retries: 10
+
+  vk_api:
+    networks:
+      - project
+    restart: always
+    build: ./vk_api
+    ports:
+    - "5052:5052"
+
+  selenoid:
+    networks:
+      - project
+    restart: always
+    image: aerokube/selenoid
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/oswalth/atom/QA-project/infrastructure/browsers.json:/etc/selenoid/browsers.json
+    ports:
+      - "4444:4444"
+    command: ["-conf", "/etc/selenoid/browsers.json", "-container-network", "project"]
+
+  myapp:
+    networks:
+      - project
+    restart: always
+    image: myapp
+    volumes:
+    - /home/oswalth/atom/QA-project/infrastructure/server.conf:/var/server.conf
+    ports:
+    - "5050:5050"
+    command: "/app/myapp --config=/var/server.conf"
+    depends_on:
+      db_container:
+        condition: service_healthy
+      vk_api:
+        condition: service_started
+      selenoid:
+        condition: service_started
