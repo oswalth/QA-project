@@ -1,3 +1,7 @@
+import time
+
+import requests
+
 from api.fixtures import *
 from ui.fixtures import *
 
@@ -5,6 +9,13 @@ from selenium import webdriver
 from selenium.webdriver import ChromeOptions
 from webdriver_manager.chrome import ChromeDriverManager
 
+
+def pytest_configure(config):
+    while True:
+        try:
+            return requests.head(config.get('url'))
+        except requests.exceptions.ConnectionError:
+            time.sleep(0.5)
 
 class UnsupportedBrowserException(Exception):
     pass
