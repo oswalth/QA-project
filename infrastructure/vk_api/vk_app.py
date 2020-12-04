@@ -8,7 +8,7 @@ db = {'oswalth': '1234'}
 
 def run_app():
     server = threading.Thread(target=app.run, kwargs={
-        "host": '0.0.0.0',
+        "host": 'vk_api',
         "port": 5052
     })
     server.start()

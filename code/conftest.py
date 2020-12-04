@@ -1,5 +1,5 @@
-from ui.fixtures import *
 from api.fixtures import *
+from ui.fixtures import *
 
 from selenium import webdriver
 from selenium.webdriver import ChromeOptions
