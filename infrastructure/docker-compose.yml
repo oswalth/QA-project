@@ -59,19 +59,3 @@ services:
         condition: service_started
       selenoid:
         condition: service_started
-
-  test_container:
-    networks:
-      - project
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /home/oswalth/atom/QA-project/allure-results:/allure-results
-    build:
-      context: ../
-      dockerfile: ./code/Dockerfile
-    command: "pytest -s -l -v --alluredir=./allure-results --selenoid=http://selenoid:4444/wd/hub code/tests && echo $(ls)"
-    depends_on:
-      myapp:
-        condition: service_started
-#&& docker cp test_container:/allure-results ./allure-results
