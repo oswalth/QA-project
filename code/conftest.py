@@ -13,9 +13,10 @@ from webdriver_manager.chrome import ChromeDriverManager
 def pytest_configure(config):
     while True:
         try:
-            return requests.head(config.get('url'))
+            return requests.head(config['url'])
         except requests.exceptions.ConnectionError:
             time.sleep(0.5)
+
 
 class UnsupportedBrowserException(Exception):
     pass
