@@ -10,14 +10,6 @@ from selenium.webdriver import ChromeOptions
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-def pytest_configure(config):
-    while True:
-        try:
-            return requests.head(config['url'])
-        except requests.exceptions.ConnectionError:
-            time.sleep(0.5)
-
-
 class UnsupportedBrowserException(Exception):
     pass
 
@@ -37,6 +29,15 @@ def config(request):
     selenoid = request.config.getoption('--selenoid')
 
     return {'browser': browser, 'version': version, 'url': url, 'download_dir': '/tmp', 'selenoid': selenoid}
+
+
+def pytest_configure(config):
+    conf = config
+    while True:
+        try:
+            return requests.head(conf['url'])
+        except requests.exceptions.ConnectionError:
+            time.sleep(0.5)
 
 
 @pytest.fixture(scope="function")
