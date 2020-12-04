@@ -70,7 +70,7 @@ services:
     build:
       context: ../
       dockerfile: ./code/Dockerfile
-    command: "pytest -s -l -v --alluredir=./allure-results --selenoid=http://selenoid:4444/wd/hub code/tests"
+    command: "pytest -s -l -v --alluredir=./allure-results --selenoid=http://selenoid:4444/wd/hub code/tests && echo $(ls)"
     depends_on:
       myapp:
         condition: service_started
