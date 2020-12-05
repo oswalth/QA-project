@@ -8,15 +8,16 @@ RETRY_COUNT = 3
 
 
 class BasePage(object):
-    locators = basic_locators.BasePageLocators()
 
     def __init__(self, driver):
         self.driver = driver
 
-    def check_if_exists(self, locator, value):
-        by, locator = locator
+    def check_if_exists(self, locator, value=False):
+        if value:
+            by, locator = locator
+            locator = (by, locator.format(value))
         try:
-            self.find((by, locator.format(value)), timeout=5)
+            self.find(locator, timeout=5)
             return True
         except TimeoutException:
             return False

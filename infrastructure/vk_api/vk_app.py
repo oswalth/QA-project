@@ -1,4 +1,6 @@
-from flask import Flask
+import json
+
+from flask import Flask, request
 import threading
 
 
@@ -15,11 +17,17 @@ def run_app():
     return server
 
 
-@app.route('/vk_id/<username>')
+@app.route('/vk_id/<username>', methods=['GET', 'POST'])
 def index(username):
-    if vk_id := db.get(username, None):
-        return {'vk_id': vk_id}, 200
-    return {}, 404
+    if request.method == 'GET':
+        if vk_id := db.get(username, None):
+            return {'vk_id': vk_id}, 200
+        return {}, 404
+    elif request.method == 'POST':
+        if db.get(username):
+            return {}, 404
+        else:
+            db[username] = json.loads(request.data.decode()).get('vk_id', '2525')
 
 
 if __name__ == '__main__':

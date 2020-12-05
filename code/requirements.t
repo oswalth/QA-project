@@ -11,8 +11,10 @@ execnet==1.7.1
 idna==2.10
 iniconfig==1.1.1
 packaging==20.7
+pkg-resources==0.0.0
 pluggy==0.13.1
 py==1.9.0
+PyMySQL==0.10.1
 pyparsing==2.4.7
 pytest==6.1.2
 pytest-forked==1.3.0

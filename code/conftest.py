@@ -1,8 +1,10 @@
+import inspect
 import time
 
 import requests
 
 from api.fixtures import *
+from orm.client import OrmConnector
 from ui.fixtures import *
 
 from selenium import webdriver
@@ -19,6 +21,7 @@ def pytest_addoption(parser):
     parser.addoption('--browser', default='chrome')
     parser.addoption('--browser_ver', default='80.0')
     parser.addoption('--selenoid', default=None)
+    parser.addoption('--window-size', default='800,600')
 
 
 @pytest.fixture(scope='session')
@@ -27,8 +30,13 @@ def config(request):
     browser = request.config.getoption('--browser')
     version = request.config.getoption('--browser_ver')
     selenoid = request.config.getoption('--selenoid')
-
-    return {'browser': browser, 'version': version, 'url': url, 'download_dir': '/tmp', 'selenoid': selenoid}
+    window_size = request.config.getoption('--window-size')
+    return {'browser': browser,
+            'version': version,
+            'url': url,
+            'download_dir': '/tmp',
+            'selenoid': selenoid,
+            'window_size': window_size}
 
 
 # def pytest_configure(config):
@@ -46,7 +54,9 @@ def driver(config):
     url = config['url']
     download_dir = config['download_dir']
     selenoid = config['selenoid']
-    print(selenoid)
+    window_size = config['window_size']
+
+
     if browser == 'chrome':
         options = ChromeOptions()
         if selenoid:
@@ -59,7 +69,7 @@ def driver(config):
                                       desired_capabilities=capabilities
                                       )
         else:
-            options.add_argument("--window-size=800,600")
+            options.add_argument(f"--window-size={window_size}")
 
             prefs = {"download.default_directory": download_dir}
             options.add_experimental_option('prefs', prefs)
@@ -77,3 +87,13 @@ def driver(config):
     yield driver
 
     driver.quit()
+
+
+@pytest.fixture(scope='function')
+def orm_connector():
+    return OrmConnector(user='test_qa', password='qa_test', db_name="TEST_DB", host="0.0.0.0", port=3306)
+
+
+@pytest.fixture(scope='function')
+def my_name():
+    return inspect.stack()[0][3]
