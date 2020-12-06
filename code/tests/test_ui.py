@@ -7,7 +7,8 @@ from selenium.webdriver import ActionChains
 from tests.base import BaseUICase
 
 
-
+@pytest.mark.usefixtures("snap_on_fail")
+@pytest.mark.UI
 class TestLoginPage(BaseUICase):
     def test_register_positive(self, my_name, get_user):
         with allure.step(f'Starting {my_name}'):
@@ -45,7 +46,7 @@ class TestLoginPage(BaseUICase):
 
             assert 'http://myapp:5050/reg' == self.login_page.driver.current_url
             assert self.login_page.check_if_exists(self.login_page.locators.EMAIL_EXIST_MSG)
-            query_user = self.builder.get_by_username(user.get('username'))
+            query_user = self.builder.get_by_username(bad_user.get('username'))
             assert query_user is None
 
     def test_register_negative_username_length(self, my_name, get_user):
@@ -107,6 +108,7 @@ class TestLoginPage(BaseUICase):
             assert query_user.active == 1
 
 
+@pytest.mark.UI
 @pytest.mark.usefixtures("snap_on_fail")
 class TestMainPage(BaseUICase):
     def test_login_vkid_should_be(self, my_name, get_user):
@@ -178,7 +180,6 @@ class TestMainPage(BaseUICase):
             self.login_page.driver.back()
             self.login_page.logout()
 
-    @pytest.mark.usefixtures("snap_on_fail")
     def test_click_python_flask(self, my_name, get_user):
         with allure.step(f'Starting {my_name}'):
             user = get_user

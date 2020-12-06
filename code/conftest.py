@@ -39,14 +39,6 @@ def config(request):
             'window_size': window_size}
 
 
-# def pytest_configure(config):
-#     while True:
-#         try:
-#             return requests.head(config.option.url)
-#         except requests.exceptions.ConnectionError:
-#             time.sleep(0.5)
-
-
 @pytest.fixture(scope="function")
 def driver(config):
     browser = config['browser']
@@ -55,7 +47,6 @@ def driver(config):
     download_dir = config['download_dir']
     selenoid = config['selenoid']
     window_size = config['window_size']
-
 
     if browser == 'chrome':
         options = ChromeOptions()
@@ -97,3 +88,30 @@ def orm_connector():
 @pytest.fixture(scope='function')
 def my_name():
     return inspect.stack()[0][3]
+
+
+def create_user(base):
+    hash_ = hashlib.sha1(base.encode("utf-8")).hexdigest()
+    username = ''.join([char for char in hash_ if char.isalpha()][:8])
+    return username
+
+
+@pytest.fixture(scope='function')
+def get_user(request):
+    username = create_user(request.node.name)
+    return {
+        "username": username,
+        "email": username + "@mail.ru",
+        "password": "2525",
+        "password2": "2525"
+    }
+
+
+@pytest.fixture(scope='function')
+def get_user_add(request):
+    username = create_user(request.node.name)
+    return {
+        "username": username,
+        "email": username + "@mail.ru",
+        "password": "2525",
+    }
