@@ -10,7 +10,7 @@ from tests.base import BaseUICase
 @pytest.mark.usefixtures("snap_on_fail")
 @pytest.mark.UI
 class TestLoginPage(BaseUICase):
-    def test_register_positive(self, my_name, get_user):
+    def test_register_positive(self, get_user):
         user = get_user
         with allure.step('Registering valid user'):
             self.login_page.register(**user, should_logout=False)
@@ -21,7 +21,7 @@ class TestLoginPage(BaseUICase):
             assert query_user.username == user['username'] and query_user.email == user['email']
             assert query_user.access == 1
 
-    def test_register_negative_username_used(self, my_name, get_user):
+    def test_register_negative_username_used(self, get_user):
         user = get_user
         bad_user = user.copy()
         bad_user['email'] = 'fineemail@mail.ru'
@@ -35,7 +35,7 @@ class TestLoginPage(BaseUICase):
             query_user = self.builder.get_by_email(bad_user.get('email'))
             assert query_user is None
 
-    def test_register_negative_email_used(self, my_name, get_user):
+    def test_register_negative_email_used(self, get_user):
         user = get_user
         bad_user = user.copy()
         bad_user['username'] = 'fineuser'
@@ -49,7 +49,7 @@ class TestLoginPage(BaseUICase):
             query_user = self.builder.get_by_username(bad_user.get('username'))
             assert query_user is None
 
-    def test_register_negative_username_length(self, my_name, get_user):
+    def test_register_negative_username_length(self, get_user):
         user = get_user
         user['username'] = "a"
         with allure.step('Registering user with short username'):
@@ -71,7 +71,7 @@ class TestLoginPage(BaseUICase):
             query_user = self.builder.get_by_email(user.get('email'))
             assert query_user is None
 
-    def test_register_negative_terms(self, my_name, get_user):
+    def test_register_negative_terms(self, get_user):
         user = get_user
         with allure.step('Registering user without accepting terms'):
             self.login_page.register(**user, terms=False)
@@ -80,7 +80,7 @@ class TestLoginPage(BaseUICase):
             query_user = self.builder.get_by_email(user.get('email'))
             assert query_user is None
 
-    def test_login_negative(self, my_name, get_user):
+    def test_login_negative(self, get_user):
         user = get_user
         with allure.step('Login with wrong data'):
             self.login_page.login(user['username'], user['password'])
@@ -105,7 +105,7 @@ class TestLoginPage(BaseUICase):
 @pytest.mark.UI
 @pytest.mark.usefixtures("snap_on_fail")
 class TestMainPage(BaseUICase):
-    def test_login_vkid_should_be(self, my_name, get_user):
+    def test_login_vkid_should_be(self, get_user):
         user = get_user
         vk_id = '4321'
         with allure.step('Registering user an sending request to vk_api'):

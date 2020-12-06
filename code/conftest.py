@@ -1,4 +1,5 @@
 import inspect
+import random
 import time
 
 import requests
@@ -14,6 +15,10 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 class UnsupportedBrowserException(Exception):
     pass
+
+
+def pytest_configure():
+    random.seed(123)
 
 
 def pytest_addoption(parser):
@@ -92,7 +97,7 @@ def my_name():
 
 def create_user(base):
     hash_ = hashlib.sha1(base.encode("utf-8")).hexdigest()
-    username = ''.join([char for char in hash_ if char.isalpha()][:8])
+    username = ''.join([char for char in hash_ if char.isalpha()][:5]) + ''.join(random.sample(hash_, 4))
     return username
 
 
