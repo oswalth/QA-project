@@ -49,6 +49,15 @@ class TestLoginPage(BaseUICase):
             query_user = self.builder.get_by_username(bad_user.get('username'))
             assert query_user is None
 
+    def test_register_negative_username_email_used(self, get_user):
+        user = get_user
+        with allure.step('Registering valid user'):
+            self.login_page.register(**user)
+        with allure.step('Registering thi user again'):
+            self.login_page.register(**user)
+            assert 'http://myapp:5050/reg' == self.login_page.driver.current_url
+            assert self.login_page.check_if_exists(self.login_page.locators.USER_EXIST_MSG)
+
     def test_register_negative_username_length(self, get_user):
         user = get_user
         user['username'] = "a"

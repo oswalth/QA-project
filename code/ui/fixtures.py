@@ -1,3 +1,5 @@
+import time
+
 import allure
 import pytest
 from allure_commons.types import AttachmentType
@@ -15,6 +17,10 @@ def login_page(driver):
 def snap_on_fail(request, driver):
     yield
     if request.node.session.testsfailed:
-        allure.attach(name=request.node.name,
+        allure.attach(name=request.node.name+'_before',
+                      body=driver.get_screenshot_as_png(),
+                      attachment_type=AttachmentType.PNG)
+        time.sleep(1)
+        allure.attach(name=request.node.name+'_after',
                       body=driver.get_screenshot_as_png(),
                       attachment_type=AttachmentType.PNG)
