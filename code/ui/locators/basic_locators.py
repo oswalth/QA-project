@@ -51,5 +51,5 @@ class LoginPageLocators:
                                           'contains(text(),"Examples")]')
 
     CONTENT_IMAGE_1 = (By.XPATH, '//div[@id="content"]/*[2]/*[1]/figure')
-    CONTENT_IMAGE_2 = (By.XPATH, '//div[@id="content"]/*[2]/*[2]/figure')
+    CONTENT_IMAGE_2 = (By.XPATH, '//div[@id="content"]/*[2]/*[2]/figure/a')
     CONTENT_IMAGE_3 = (By.XPATH, '//div[@id="content"]/*[2]/*[3]/figure')

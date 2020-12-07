@@ -197,10 +197,10 @@ class TestMainPage(BaseUICase):
         window_before = self.login_page.driver.window_handles[0]
         window_after = self.login_page.driver.window_handles[1]
         with allure.step('Switching to next tab and check its url'):
-            self.login_page.driver.switch_to_window(window_after)
+            self.login_page.driver.switch_to.window(window_after)
             assert 'https://flask.palletsprojects.com/en/1.1.x/#' == self.login_page.driver.current_url
         with allure.step('Switching to prev tab'):
-            self.login_page.driver.switch_to_window(window_before)
+            self.login_page.driver.switch_to.window(window_before)
             self.login_page.logout(timeout=10)
 
     def test_click_linux_centos(self, get_user):
@@ -214,10 +214,10 @@ class TestMainPage(BaseUICase):
         window_before = self.login_page.driver.window_handles[0]
         window_after = self.login_page.driver.window_handles[1]
         with allure.step('Switching to next tab and check its url'):
-            self.login_page.driver.switch_to_window(window_after)
+            self.login_page.driver.switch_to.window(window_after)
             assert 'https://www.centos.org/download/' == self.login_page.driver.current_url
         with allure.step('Switching to prev tab'):
-            self.login_page.driver.switch_to_window(window_before)
+            self.login_page.driver.switch_to.window(window_before)
             self.login_page.logout()
 
     def test_click_network_ws_news(self, get_user):
@@ -231,10 +231,10 @@ class TestMainPage(BaseUICase):
         window_before = self.login_page.driver.window_handles[0]
         window_after = self.login_page.driver.window_handles[1]
         with allure.step('Switching to next tab and check its url'):
-            self.login_page.driver.switch_to_window(window_after)
+            self.login_page.driver.switch_to.window(window_after)
             assert 'https://www.wireshark.org/news/' == self.login_page.driver.current_url
         with allure.step('Switching to prev tab'):
-            self.login_page.driver.switch_to_window(window_before)
+            self.login_page.driver.switch_to.window(window_before)
             self.login_page.logout()
 
     def test_click_network_ws_download(self, get_user):
@@ -248,10 +248,10 @@ class TestMainPage(BaseUICase):
         window_before = self.login_page.driver.window_handles[0]
         window_after = self.login_page.driver.window_handles[1]
         with allure.step('Switching to next tab and check its url'):
-            self.login_page.driver.switch_to_window(window_after)
+            self.login_page.driver.switch_to.window(window_after)
             assert 'https://www.wireshark.org/#download' == self.login_page.driver.current_url
         with allure.step('Switching to prev tab'):
-            self.login_page.driver.switch_to_window(window_before)
+            self.login_page.driver.switch_to.window(window_before)
             self.login_page.logout()
 
     def test_click_network_tcpdump_examples(self, get_user):
@@ -265,10 +265,10 @@ class TestMainPage(BaseUICase):
         window_before = self.login_page.driver.window_handles[0]
         window_after = self.login_page.driver.window_handles[1]
         with allure.step('Switching to next tab and check its url'):
-            self.login_page.driver.switch_to_window(window_after)
+            self.login_page.driver.switch_to.window(window_after)
             assert 'https://hackertarget.com/tcpdump-examples/' == self.login_page.driver.current_url
         with allure.step('Switching to prev tab'):
-            self.login_page.driver.switch_to_window(window_before)
+            self.login_page.driver.switch_to.window(window_before)
             self.login_page.logout()
 
     def test_click_content_1(self, get_user):
@@ -279,10 +279,10 @@ class TestMainPage(BaseUICase):
         window_before = self.login_page.driver.window_handles[0]
         window_after = self.login_page.driver.window_handles[1]
         with allure.step('Switching to next tab and check its url'):
-            self.login_page.driver.switch_to_window(window_after)
+            self.login_page.driver.switch_to.window(window_after)
             assert 'https://en.wikipedia.org/wiki/API' == self.login_page.driver.current_url
         with allure.step('Switching to prev tab'):
-            self.login_page.driver.switch_to_window(window_before)
+            self.login_page.driver.switch_to.window(window_before)
             self.login_page.logout()
 
     def test_click_content_2(self, get_user):
@@ -293,10 +293,10 @@ class TestMainPage(BaseUICase):
         window_before = self.login_page.driver.window_handles[0]
         window_after = self.login_page.driver.window_handles[1]
         with allure.step('Switching to next tab and check its page source'):
-            self.login_page.driver.switch_to_window(window_after)
+            self.login_page.driver.switch_to.window(window_after)
             assert 'future of the internet' in self.login_page.driver.page_source
         with allure.step('Switching to prev tab'):
-            self.login_page.driver.switch_to_window(window_before)
+            self.login_page.driver.switch_to.window(window_before)
             self.login_page.logout()
 
     def test_click_content_3(self, get_user):
@@ -307,8 +307,8 @@ class TestMainPage(BaseUICase):
         window_before = self.login_page.driver.window_handles[0]
         window_after = self.login_page.driver.window_handles[1]
         with allure.step('Switching to next tab and check its url'):
-            self.login_page.driver.switch_to_window(window_after)
+            self.login_page.driver.switch_to.window(window_after)
             assert 'https://ru.wikipedia.org/wiki/SMTP' == self.login_page.driver.current_url
         with allure.step('Switching to prev tab'):
-            self.login_page.driver.switch_to_window(window_before)
+            self.login_page.driver.switch_to.window(window_before)
             self.login_page.logout()
